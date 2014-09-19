@@ -1,0 +1,33 @@
+{
+    "name": "freepius/silex-richtext",
+    "description": "A service provider for Silex allowing to use Markdown-Extra and SmartyPants-Typographer (both from Michel Fortin)",
+    "keywords": ["silex", "markdown"],
+    "homepage": "http://github.com/freepius44/silex-richtext",
+    "license": "CC0",
+    "authors": [
+        {
+            "name": "Mathieu Poisbeau",
+            "email": "freepius44@gmail.com"
+        }
+    ],
+    "require": {
+        "michelf/php-markdown": "*",
+        "michelf/php-smartypants": "*"
+    },
+    "require-dev": {
+        "pimple/pimple": "~3.0",
+        "twig/twig": "~1.8",
+        "phpunit/phpunit": "~4.0"
+    },
+    "suggest": {
+        "silex/silex": "~2.0"
+    },
+    "autoload": {
+        "psr-0": { "Freepius": "src/" }
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-master": "1.0.x-dev"
+        }
+    }
+}
