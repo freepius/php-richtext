@@ -10,6 +10,7 @@ use Pimple\ServiceProviderInterface;
 /**
  * Integration of Markdown-Extra and SmartyPants-Typographer
  * for Pimple container.
+ * Possibly add the Twig extension.
  */
 class RichtextProvider implements ServiceProviderInterface
 {
@@ -41,7 +42,7 @@ class RichtextProvider implements ServiceProviderInterface
         foreach ($transformerTypes as $type)
         {
             $c["richtext.$type"] = $c->protect(
-                function ($text, array $options = []) use ($c) {
+                function ($text, array $options = array()) use ($c) {
                     return $c['richtext']->{$type}($text, $options);
                 }
             );

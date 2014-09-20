@@ -3,11 +3,11 @@ php-richtext
 
 This package provides :
 
-* a simple wrapper allowing to use `Markdown(+Extra)`_ and `SmartyPants(+Typographer)`_, together or alone
+* a simple wrapper allowing to use `Markdown(Extra)`_ and `SmartyPants(Typographer)`_, together or alone
 * a service provider for the `Pimple`_ DI Container
 * an extension for the `Twig`_ template engine
 
-`Markdown(+Extra)`_ and `SmartyPants(+Typographer)`_ packages come from `Michel Fortin`_.
+`Markdown(Extra)`_ and `SmartyPants(Typographer)`_ packages come from `Michel Fortin`_.
 Thanks to him for its great work!
 
 php-richtext works with PHP 5.3 or later.
@@ -175,5 +175,5 @@ php-richtext is licensed under the CC0 license.
 .. _Twig:                       http://twig.sensiolabs.org
 .. _Silex:                      http://silex.sensiolabs.org
 .. _Michel Fortin:              https://michelf.ca
-.. _Markdown(+Extra):           https://michelf.ca/projets/php-markdown
-.. _SmartyPants(+Typographer):  https://michelf.ca/projets/php-smartypants
+.. _Markdown(Extra):            https://michelf.ca/projets/php-markdown
+.. _SmartyPants(Typographer):   https://michelf.ca/projets/php-smartypants
