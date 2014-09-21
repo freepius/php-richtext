@@ -10,12 +10,13 @@ This package provides :
 `Markdown(Extra)`_ and `SmartyPants(Typographer)`_ packages come from `Michel Fortin`_.
 Thanks to him for its great work!
 
-php-richtext works with PHP 5.3 or later.
+**php-richtext** works with *PHP 5.3* or later.
+
 
 Installation
 ------------
 
-The recommended way to install php-richtext is through `Composer`_. Just create a
+The recommended way to install **php-richtext** is through `Composer`_. Just create a
 ``composer.json`` file and run the ``php composer.phar install`` command to
 install it:
 
@@ -26,6 +27,7 @@ install it:
             "freepius\php-richtext": "~1.0"
         }
     }
+
 
 Usage
 -----
@@ -68,7 +70,7 @@ Use as services of a `Pimple`_ DI Container:
     echo $c['richtext']->smartypants($text);
 
 
-Since `Silex`_ uses internally the `Pimple`_ DI Container, you can use ``php-richtext`` with `Silex`_:
+Since `Silex`_ uses internally the `Pimple`_ DI Container, you can use **php-richtext** with `Silex`_:
 
 .. code-block:: php
 
@@ -109,10 +111,6 @@ If `Twig`_ is installed, you can also use the richtext filters in your `Twig`_ t
         new Freepius\Twig\Extension\RichtextTwigExtension($richtext)
     );
 
-    /* Or, if you use Twig through Silex,
-     * to register the RichtextProvider will add automatically the twig extension!
-     */
-
 .. code-block:: twig
 
     {{ 'Here a <<markdown-extra>> and/or ,,smartypants-typo`` text.' | richtext }}
@@ -121,40 +119,52 @@ If `Twig`_ is installed, you can also use the richtext filters in your `Twig`_ t
 
     {{ 'Here a <<markdown-extra>> and/or ,,smartypants-typo`` text.' | smartypants }}
 
+
+**Note for Silex:** If you use Twig through Silex, first register the ``TwigServiceProvider``,
+then register the ``RichtextProvider``. This one will add automatically the twig extension!
+
+
 Configuration
 -------------
 
-The constructor of Richtext class accepts the following configuration parameters:
+The constructor of ``Richtext`` class accepts the following configuration parameters
+(as an associative array):
 
 * locale:
-  * type        : string
-  * default     : null
-  * description : if defined, the SmartyPants(Typographer) will be configured
+
+  * type        : ``string``
+  * default     : ``null``
+  * description : if defined, the `SmartyPants(Typographer)`_ will be configured
     depending on this locale. Presently, only 'en' (de facto) and 'fr' are handled.
 
 * extra:
-  * type        : bool
-  * default     : true
-  * description : if true, MarkdownExtra is used (instead of Markdown)
+
+  * type        : ``bool``
+  * default     : ``true``
+  * description : if ``true``, ``MarkdownExtra`` is used (instead of ``Markdown``)
 
 * typo:
-  * type        : bool
-  * default     : true
-  * description : if true, SmartyPantsTypographer is used (instead of SmartyPants)
+
+  * type        : ``bool``
+  * default     : ``true``
+  * description : if ``true``, ``SmartyPantsTypographer`` is used (instead of ``SmartyPants``)
 
 * smartypants.attr:
-  * type        : string
-  * default     : SMARTYPANTS_ATTR_LONG_EM_DASH_SHORT_EN
-  * description : attributes to pass to SmartyPants(Typographer) constructor
 
-Note: If `locale` is defined and `smartypants.attr` is null,
-      `smartypants.attr` is guessed according to `locale`.
-      Presently, only 'en' (de facto) and 'fr' are handled.
+  * type        : ``string``
+  * default     : ``SMARTYPANTS_ATTR_LONG_EM_DASH_SHORT_EN``
+  * description : attributes to pass to `SmartyPants(Typographer)`_ constructor
+
+
+**Note:** If ``locale`` is defined and ``smartypants.attr`` is ``null``,
+``smartypants.attr`` is guessed according to ``locale``.
+Presently, only 'en' (de facto) and 'fr' are handled.
+
 
 Tests
 -----
 
-WARNING: presently, no test is implemented yet!
+**Warning:** presently, no test is implemented yet!
 
 To run the test suite, you need `Composer`_:
 
@@ -163,10 +173,11 @@ To run the test suite, you need `Composer`_:
     $ php composer.phar install --dev
     $ vendor/bin/phpunit
 
+
 License
 -------
 
-php-richtext is licensed under the CC0 license.
+**php-richtext** is licensed under the **CC0** license.
 
 .. _Composer:                   http://getcomposer.org
 .. _Pimple:                     http://pimple.sensiolabs.org
