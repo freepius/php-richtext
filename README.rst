@@ -155,6 +155,12 @@ The constructor of ``Richtext`` class accepts the following configuration parame
   * default     : ``SMARTYPANTS_ATTR_LONG_EM_DASH_SHORT_EN``
   * description : attributes to pass to `SmartyPants(Typographer)`_ constructor
 
+* remove.script.tags:
+
+  * type        : ``bool``
+  * default     : ``true``
+  * description : if ``true``, remove the ``<script>`` tags of the final html
+
 
 **Note:** If ``locale`` is defined and ``smartypants.attr`` is ``null``,
 ``smartypants.attr`` is guessed according to ``locale``.

@@ -58,7 +58,14 @@ class Richtext implements RichtextInterface
             $md->fn_id_prefix = uniqid();
         }
 
-        return $md->transform($text);
+        $html = $md->transform($text);
+
+        // remove <script> tags
+        if ($this->config['remove.script.tags']) {
+            $html = preg_replace(static::SCRIPT_TAG_PATTERN, '', $html);
+        }
+
+        return $html;
     }
 
     /**
