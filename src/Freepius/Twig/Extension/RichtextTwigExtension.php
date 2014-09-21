@@ -8,11 +8,6 @@ class RichtextTwigExtension extends \Twig_Extension
 {
     protected $richtext;
 
-    /**
-     * Public constructor
-     *
-     * @param RichtextInterface $richtext
-     */
     public function __construct(RichtextInterface $richtext)
     {
         $this->richtext = $richtext;
@@ -26,11 +21,9 @@ class RichtextTwigExtension extends \Twig_Extension
         $htmlSafe = array('is_safe' => array('html'));
 
         return array(
-            'richtext'         => new \Twig_SimpleFilter($this->richtext, 'full'          , $htmlSafe),
-            'markdown'         => new \Twig_SimpleFilter($this->richtext, 'markdown'      , $htmlSafe),
-            'markdown_extra'   => new \Twig_SimpleFilter($this->richtext, 'markdown_extra', $htmlSafe),
-            'smartypants'      => new \Twig_SimpleFilter($this->richtext, 'smartypants'),
-            'smartypants_typo' => new \Twig_SimpleFilter($this->richtext, 'smartypants_typo'),
+            new \Twig_SimpleFilter('richtext'   , array($this->richtext, 'transform'), $htmlSafe),
+            new \Twig_SimpleFilter('markdown'   , array($this->richtext, 'markdown'),  $htmlSafe),
+            new \Twig_SimpleFilter('smartypants', array($this->richtext, 'smartypants')),
         );
     }
 

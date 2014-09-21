@@ -10,63 +10,99 @@ use Michelf\SmartyPantsTypographer;
 /**
  * Transform a text using Markdown(Extra) and/or SmartyPants(Typographer)
  */
-class RichText implements RichTextInterface
+class Richtext implements RichtextInterface
 {
-    const SCRIPT_TAG_PATTERN = '{<(\s*)script(.*)>.*<(\s*)/(\s*)script(.*)>}si';
+    /**
+     * @var array
+     */
+    protected $config;
 
-    const DEFAULT_SMARTYPANTS_OPTIONS = 'qgD';
+    /* @var Markdown|MarkdownExtra */
+    protected $_markdown;
 
-    const DEFAULT_SMARTYPANTS_TYPO_OPTIONS = 'qgD:+;+m+h+H+f+u+t';
+    /* @var SmartyPants|SmartyPantsTypographer */
+    protected $_smartypants;
 
-    public $markdown;
-    public $smartypants;
 
-    public function __construct(array $options = array())
+    public function __construct(array $config = array())
     {
-        $this->markdown        = new Markdown();
-        $this->markdownExtra   = new MarkdownExtra();
-        $this->smartypants     = new SmartyPantsTypographer(DEFAULT_SMARTYPANTS_OPTIONS);
-        $this->smartypantsTypo = new SmartyPants(DEFAULT_SMARTYPANTS_TYPO_OPTIONS);
+        $this->config = array_merge(static::DEFAULT_CONFIG, $config);
 
-        // HTML output
-        $this->markdown->empty_element_suffix      = ">";
-        $this->markdownExtra->empty_element_suffix = ">";
-
-        if (isset($options['locale'] && $options['locale'] === 'fr')
-        {
-            // French quotes
-            $this->smartypantsTypo->smart_doublequote_open  = '&#171;';
-            $this->smartypantsTypo->smart_doublequote_close = '&#187;';
+        if (
+            null !== $this->config['locale'] &&
+            null === $this->config['smartypants.attr'] &&
+            null !== static::SMARTYPANTS_ATTR_BY_LOCALE[$this->config['locale']]
+        ) {
+            $this->config['smartypants.attr'] =
+                static::SMARTYPANTS_ATTR_BY_LOCALE[$this->config['locale']];
         }
     }
 
-    public function full($text)
+    /**
+     * {@inheritdoc}
+     */
+    public function transform($text)
     {
-        $text = $this->markdown_extra($text);
-
-        return $this->smartypants_typo($text);
+        return $this->smartypants($this->markdown($text));
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function markdown($text)
     {
-        return $this->markdown->transform($text);
-    }
+        $md = $this->getMarkdown();
 
-    public function markdown_extra($text)
-    {
         // avoid conflicts for footnote ids
-        $this->markdownExtra->fn_id_prefix = uniqid();
+        if ($this->config['extra']) {
+            $md->fn_id_prefix = uniqid();
+        }
 
-        return $this->markdownExtra->transform($text);
+        return $md->transform($text);
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function smartypants($text)
     {
-        return $this->smartypants->transform($text);
+        return $this->getSmartypants()->transform($text);
     }
 
-    public function smartypants_typo($text)
+    /**
+     * Initialize and return an instance of Markdown|MarkdownExtra class.
+     */
+    public function getMarkdown()
     {
-        return $this->smartypantsTypo->transform($text);
+        if (!$this->_markdown) {
+            $this->_markdown = $this->config['extra'] ? new MarkdownExtra : new Markdown;
+            $this->_markdown->empty_element_suffix = ">";
+        }
+
+        return $this->_markdown;
+    }
+
+    /**
+     * Initialize and return an instance of SmartyPants|SmartyPantsTypographer class.
+     */
+    public function getSmartypants()
+    {
+        if (!$this->_smartypants) {
+            // Typographer
+            if ($this->config['typo']) {
+                $this->_smartypants = new SmartyPantsTypographer($this->config['smartypants.attr']);
+
+                if ('fr' === $this->config['locale']) {
+                    // French quotes
+                    $this->_smartypants->smart_doublequote_open  = '&#171;';
+                    $this->_smartypants->smart_doublequote_close = '&#187;';
+                }
+            // Basic
+            } else {
+                $this->_smartypants = new SmartyPants($this->config['smartypants.attr']);
+            }
+        }
+
+        return $this->_smartypants;
     }
 }

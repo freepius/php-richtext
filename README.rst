@@ -30,25 +30,6 @@ install it:
 Usage
 -----
 
-Use from static functions:
-
-.. code-block:: php
-
-    <?php
-
-    require_once __DIR__.'/../vendor/autoload.php';
-
-    echo Freepius\Richtext::full($text, $options);
-
-    echo Freepius\Richtext::markdown($text, $options);
-
-    echo Freepius\Richtext::markdown_extra($text, $options);
-
-    echo Freepius\Richtext::smartypants($text, $options);
-
-    echo Freepius\Richtext::smartypants_typo($text, $options);
-
-
 Use from an instance of the ``Richtext`` class:
 
 .. code-block:: php
@@ -57,15 +38,13 @@ Use from an instance of the ``Richtext`` class:
 
     require_once __DIR__.'/../vendor/autoload.php';
 
-    $richtext = new Freepius\Richtext($defaultOptions);
+    $richtext = new Freepius\Richtext($config);
 
-    echo $richtext->full($text);
+    echo $richtext->transform($text);
 
     echo $richtext->markdown($text);
 
-    echo $richtext->markdown_extra($text, $options);
-
-    /*...*/
+    echo $richtext->smartypants($text);
 
 
 Use as services of a `Pimple`_ DI Container:
@@ -76,21 +55,17 @@ Use as services of a `Pimple`_ DI Container:
 
     require_once __DIR__.'/../vendor/autoload.php';
 
-    $c = new Pimple\Container;
+    $c = new Pimple\Container();
 
     $c->register(new Freepius\Pimple\Provider\RichtextProvider(), array(
-        'richtext.options' => array(/*some options here*/),
+        'richtext.config' => array(/*config here*/),
     ));
 
-    echo $c['richtext']->full($text);
+    echo $c['richtext']->transform($text);
 
     echo $c['richtext']->markdown($text);
 
-    echo $c['richtext.full']($text);
-
-    echo $c['richtext.markdown']($text);
-
-    /*...*/
+    echo $c['richtext']->smartypants($text);
 
 
 Since `Silex`_ uses internally the `Pimple`_ DI Container, you can use ``php-richtext`` with `Silex`_:
@@ -108,11 +83,11 @@ Since `Silex`_ uses internally the `Pimple`_ DI Container, you can use ``php-ric
     $app = new Application();
 
     $app->register(new RichtextProvider(), array(
-        'richtext.options' => array(/*some options here*/),
+        'richtext.config' => array(/*config here*/),
     ));
 
     $app->post('/blog/render-text', function (Application $app, Request $request) {
-        return $app['render.full']($request->get('text'));
+        return $app['richtext']->transform($request->get('text'));
     });
 
     $app->run();
@@ -128,7 +103,7 @@ If `Twig`_ is installed, you can also use the richtext filters in your `Twig`_ t
 
     /* From there, Twig is assumed to be loaded */
 
-    $richtext = new Freepius\Richtext($options);
+    $richtext = new Freepius\Richtext($config);
 
     $twig->addExtension(
         new Freepius\Twig\Extension\RichtextTwigExtension($richtext)
@@ -140,23 +115,46 @@ If `Twig`_ is installed, you can also use the richtext filters in your `Twig`_ t
 
 .. code-block:: twig
 
-    {{ 'This is a <<markdown-extra>> and/or ,,smartypants-typo`` text.' | richtext }} {# full render #}
+    {{ 'Here a <<markdown-extra>> and/or ,,smartypants-typo`` text.' | richtext }}
 
-    {{ 'This is a <<markdown-extra>> and/or ,,smartypants-typo`` text.' | markdown(some_options) }}
+    {{ 'Here a <<markdown-extra>> and/or ,,smartypants-typo`` text.' | markdown }}
 
-    {{ 'This is a <<markdown-extra>> and/or ,,smartypants-typo`` text.' | markdown_extra }}
+    {{ 'Here a <<markdown-extra>> and/or ,,smartypants-typo`` text.' | smartypants }}
 
-    {{ 'This is a <<markdown-extra>> and/or ,,smartypants-typo`` text.' | smartypants }}
+Configuration
+-------------
 
-    {{ 'This is a <<markdown-extra>> and/or ,,smartypants-typo`` text.' | smartypants_typo }}
+The constructor of Richtext class accepts the following configuration parameters:
 
-Options
--------
+* locale:
+  * type        : string
+  * default     : null
+  * description : if defined, the SmartyPants(Typographer) will be configured
+    depending on this locale. Presently, only 'en' (de facto) and 'fr' are handled.
 
-TODO
+* extra:
+  * type        : bool
+  * default     : true
+  * description : if true, MarkdownExtra is used (instead of Markdown)
+
+* typo:
+  * type        : bool
+  * default     : true
+  * description : if true, SmartyPantsTypographer is used (instead of SmartyPants)
+
+* smartypants.attr:
+  * type        : string
+  * default     : SMARTYPANTS_ATTR_LONG_EM_DASH_SHORT_EN
+  * description : attributes to pass to SmartyPants(Typographer) constructor
+
+Note: If `locale` is defined and `smartypants.attr` is null,
+      `smartypants.attr` is guessed according to `locale`.
+      Presently, only 'en' (de facto) and 'fr' are handled.
 
 Tests
 -----
+
+WARNING: presently, no test is implemented yet!
 
 To run the test suite, you need `Composer`_:
 

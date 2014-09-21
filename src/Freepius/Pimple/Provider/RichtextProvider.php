@@ -8,9 +8,8 @@ use Pimple\Container;
 use Pimple\ServiceProviderInterface;
 
 /**
- * Integration of Markdown-Extra and SmartyPants-Typographer
- * for Pimple container.
- * Possibly add the Twig extension.
+ * Integration of Markdown(Extra) and SmartyPants(Typographer)
+ * for Pimple container. If twig is active then add the Twig extension.
  */
 class RichtextProvider implements ServiceProviderInterface
 {
@@ -19,38 +18,27 @@ class RichtextProvider implements ServiceProviderInterface
      */
     public function register(Container $c)
     {
-        // Options
+        // Configuration
 
-        $c['richtext.options'] = array();
+        $c['richtext.config'] = array();
 
         if (isset($c['locale']) && $c['locale']) {
-            $c['richtext.options']['locale'] = $c['locale'];
+            $c['richtext.config'] += array('locale' => $c['locale']);
+
+            if (in_array($c['locale'], Richtext::HANDLED_LOCALES)) {
+                $c['richtext.config'] += array('smartypants.attr' => null);
+            }
         }
 
-        // Services
+        // Service
 
         $c['richtext'] = function ($c) {
-            return new Richtext($c['richtext.options']);
+            return new Richtext($c['richtext.config']);
         };
-
-        $transformerTypes = [
-            'full',
-            'markdown', 'markdown_extra',
-            'smartypants', 'smartypants_typo'
-        ];
-
-        foreach ($transformerTypes as $type)
-        {
-            $c["richtext.$type"] = $c->protect(
-                function ($text, array $options = array()) use ($c) {
-                    return $c['richtext']->{$type}($text, $options);
-                }
-            );
-        }
 
         // Twig extension
 
-        if (isset($c['twig']) && $c['twig'] instanceof \Twig_Environment) {
+        if (isset($c['twig'])) {
             $c['twig'] = $c->extend('twig', function($twig, $c) {
                 $twig->addExtension(new RichtextTwigExtension($c['richtext']));
                 return $twig;

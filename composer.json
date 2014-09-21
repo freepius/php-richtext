@@ -1,6 +1,6 @@
 {
     "name": "freepius/php-richtext",
-    "description": "A simple wrapper (and more) allowing to use Markdown-Extra and SmartyPants-Typographer",
+    "description": "A simple wrapper (and more) allowing to use Markdown(Extra) and SmartyPants(Typographer)",
     "keywords": ["markdown", "pimple", "twig", "silex"],
     "homepage": "http://github.com/freepius44/php-richtext",
     "license": "CC0",
@@ -16,7 +16,7 @@
     },
     "require-dev": {
         "pimple/pimple": "~3.0",
-        "twig/twig": "~1.8",
+        "twig/twig": ">=1.8.0,<2.0-dev",
         "phpunit/phpunit": "~4.0"
     },
     "suggest": {
@@ -27,7 +27,7 @@
     },
     "extra": {
         "branch-alias": {
-            "dev-master": "1.0.x-dev"
+            "dev-master": "1.0-dev"
         }
     }
 }
