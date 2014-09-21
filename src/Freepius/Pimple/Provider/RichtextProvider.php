@@ -25,7 +25,7 @@ class RichtextProvider implements ServiceProviderInterface
         if (isset($c['locale']) && $c['locale']) {
             $c['richtext.config'] += array('locale' => $c['locale']);
 
-            if (in_array($c['locale'], Richtext::HANDLED_LOCALES)) {
+            if (in_array($c['locale'], Richtext::$HANDLED_LOCALES)) {
                 $c['richtext.config'] += array('smartypants.attr' => null);
             }
         }

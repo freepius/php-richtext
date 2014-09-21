@@ -13,6 +13,36 @@ use Michelf\SmartyPantsTypographer;
 class Richtext implements RichtextInterface
 {
     /**
+     * Define the better SmartyPants(Typographer) attributes for a given locale
+     */
+    public static $SMARTYPANTS_ATTR_BY_LOCALE = array
+    (
+        'fr' => 'qgD:+;+m+h+H+f+u+t',
+    );
+
+    /**
+     * Locales handled by the SMARTYPANTS_ATTR_BY_LOCALE const.
+     */
+    public static $HANDLED_LOCALES = array('fr');
+
+    /**
+     * Default: active the *MarkdownExtra* and *SmartyPantsTypographer* parsers
+     */
+    public static $DEFAULT_CONFIG = array
+    (
+        'locale'             => null,
+        'extra'              => true,
+        'typo'               => true,
+        'smartypants.attr'   => 2, // ie: SMARTYPANTS_ATTR_LONG_EM_DASH_SHORT_EN,
+        'remove.script.tags' => true,
+    );
+
+    /**
+     * Pattern to recognize the <script> tags.
+     */
+    public static $SCRIPT_TAG_PATTERN = '{<(\s*)script(.*)>.*<(\s*)/(\s*)script(.*)>}si';
+
+    /**
      * @var array
      */
     protected $config;
@@ -26,15 +56,15 @@ class Richtext implements RichtextInterface
 
     public function __construct(array $config = array())
     {
-        $this->config = array_merge(static::DEFAULT_CONFIG, $config);
+        $this->config = array_merge(static::$DEFAULT_CONFIG, $config);
 
         if (
             null !== $this->config['locale'] &&
             null === $this->config['smartypants.attr'] &&
-            null !== static::SMARTYPANTS_ATTR_BY_LOCALE[$this->config['locale']]
+            isset(static::$SMARTYPANTS_ATTR_BY_LOCALE[$this->config['locale']])
         ) {
             $this->config['smartypants.attr'] =
-                static::SMARTYPANTS_ATTR_BY_LOCALE[$this->config['locale']];
+                static::$SMARTYPANTS_ATTR_BY_LOCALE[$this->config['locale']];
         }
     }
 
@@ -62,7 +92,7 @@ class Richtext implements RichtextInterface
 
         // remove <script> tags
         if ($this->config['remove.script.tags']) {
-            $html = preg_replace(static::SCRIPT_TAG_PATTERN, '', $html);
+            $html = preg_replace(static::$SCRIPT_TAG_PATTERN, '', $html);
         }
 
         return $html;

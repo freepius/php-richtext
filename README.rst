@@ -120,7 +120,7 @@ If `Twig`_ is installed, you can also use the richtext filters in your `Twig`_ t
     {{ 'Here a <<markdown-extra>> and/or ,,smartypants-typo`` text.' | smartypants }}
 
 
-**Note for Silex:** If you use Twig through Silex, first register the ``TwigServiceProvider``,
+**Note for Silex:** If you use `Twig`_ through `Silex`_, first register the ``TwigServiceProvider``,
 then register the ``RichtextProvider``. This one will add automatically the twig extension!
 
 
@@ -130,32 +130,32 @@ Configuration
 The constructor of ``Richtext`` class accepts the following configuration parameters
 (as an associative array):
 
-* locale:
+* **locale**
 
   * type        : ``string``
   * default     : ``null``
   * description : if defined, the `SmartyPants(Typographer)`_ will be configured
     depending on this locale. Presently, only 'en' (de facto) and 'fr' are handled.
 
-* extra:
+* **extra**
 
   * type        : ``bool``
   * default     : ``true``
   * description : if ``true``, ``MarkdownExtra`` is used (instead of ``Markdown``)
 
-* typo:
+* **typo**
 
   * type        : ``bool``
   * default     : ``true``
   * description : if ``true``, ``SmartyPantsTypographer`` is used (instead of ``SmartyPants``)
 
-* smartypants.attr:
+* **smartypants.attr**
 
   * type        : ``string``
   * default     : ``SMARTYPANTS_ATTR_LONG_EM_DASH_SHORT_EN``
   * description : attributes to pass to `SmartyPants(Typographer)`_ constructor
 
-* remove.script.tags:
+* **remove.script.tags**
 
   * type        : ``bool``
   * default     : ``true``
