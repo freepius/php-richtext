@@ -21,9 +21,9 @@ class RichtextTwigExtension extends \Twig_Extension
         $htmlSafe = array('is_safe' => array('html'));
 
         return array(
-            new \Twig_SimpleFilter('richtext'   , array($this->richtext, 'transform'), $htmlSafe),
-            new \Twig_SimpleFilter('markdown'   , array($this->richtext, 'markdown'),  $htmlSafe),
-            new \Twig_SimpleFilter('smartypants', array($this->richtext, 'smartypants')),
+            new \Twig_SimpleFilter('richtext'   , array($this->richtext, 'transform')  , $htmlSafe),
+            new \Twig_SimpleFilter('markdown'   , array($this->richtext, 'markdown')   , $htmlSafe),
+            new \Twig_SimpleFilter('smartypants', array($this->richtext, 'smartypants'), $htmlSafe),
         );
     }
 
