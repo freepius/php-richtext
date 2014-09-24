@@ -11,8 +11,8 @@
         }
     ],
     "require": {
-        "michelf/php-markdown": "*",
-        "michelf/php-smartypants": "*"
+        "michelf/php-markdown": "1.4.*@dev",
+        "michelf/php-smartypants": "1.6.*@dev"
     },
     "require-dev": {
         "pimple/pimple": "~3.0",
@@ -20,7 +20,7 @@
         "phpunit/phpunit": "~4.0"
     },
     "suggest": {
-        "silex/silex": "~2.0"
+        "silex/silex": "2.0.*@dev"
     },
     "autoload": {
         "psr-0": { "Freepius": "src/" }
