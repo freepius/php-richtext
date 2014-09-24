@@ -26,7 +26,8 @@ class Richtext implements RichtextInterface
     public static $HANDLED_LOCALES = array('fr');
 
     /**
-     * Default: active the *MarkdownExtra* and *SmartyPantsTypographer* parsers
+     * Default: -> active the *MarkdownExtra* and *SmartyPantsTypographer* parsers
+     *          -> remove the <script> tags
      */
     public static $DEFAULT_CONFIG = array
     (
@@ -38,13 +39,14 @@ class Richtext implements RichtextInterface
     );
 
     /**
-     * Pattern to recognize the <script> tags.
+     * PCRE pattern to recognize the <script> tags:
+     *   < script attr1="..." attr2="..." > Some text < / script attr="..." >
+     *   < script attr1="..." attr2="..." > Some text until the end of string
      */
-    public static $SCRIPT_TAG_PATTERN = '{<(\s*)script(.*)>.*<(\s*)/(\s*)script(.*)>}si';
+    public static $SCRIPT_TAG_PATTERN =
+        '{<(\s*?)script(.*?)>(.*?)(<(\s*?)/(\s*?)script(.*?)>|$)}si';
 
-    /**
-     * @var array
-     */
+    /* @var array */
     protected $config;
 
     /* @var Markdown|MarkdownExtra */
@@ -69,6 +71,16 @@ class Richtext implements RichtextInterface
     }
 
     /**
+     * Return the configuration parameters currently used.
+     *
+     * @return array
+     */
+    public function getConfig()
+    {
+        return $this->config;
+    }
+
+    /**
      * {@inheritdoc}
      */
     public function transform($text)
@@ -88,12 +100,12 @@ class Richtext implements RichtextInterface
             $md->fn_id_prefix = uniqid();
         }
 
-        $html = $md->transform($text);
-
-        // remove <script> tags
+        // remove <script> tags in original $text
         if ($this->config['remove.script.tags']) {
-            $html = preg_replace(static::$SCRIPT_TAG_PATTERN, '', $html);
+            $text = preg_replace(static::$SCRIPT_TAG_PATTERN, '', $text);
         }
+
+        $html = $md->transform($text);
 
         return $html;
     }
