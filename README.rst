@@ -4,7 +4,7 @@ php-richtext
 This package provides :
 
 * a simple wrapper allowing to use `Markdown(Extra)`_ and `SmartyPants(Typographer)`_, together or alone
-* a service provider for the `Pimple`_ DI Container
+* a service provider for the `Pimple`_ DI Container (and so for `Silex`_ too)
 * an extension for the `Twig`_ template engine
 
 `Markdown(Extra)`_ and `SmartyPants(Typographer)`_ packages come from `Michel Fortin`_.
@@ -169,8 +169,6 @@ Presently, only 'en' (de facto) and 'fr' are handled.
 
 Tests
 -----
-
-**Warning:** presently, no test is implemented yet!
 
 To run the test suite, you need `Composer`_:
 
