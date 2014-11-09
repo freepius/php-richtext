@@ -2,7 +2,7 @@
     "name": "freepius/php-richtext",
     "description": "A simple wrapper (and more) allowing to use Markdown(Extra) and SmartyPants(Typographer)",
     "keywords": ["markdown", "pimple", "twig", "silex"],
-    "homepage": "http://github.com/freepius44/php-richtext",
+    "homepage": "http://github.com/freepius/php-richtext",
     "license": "CC0",
     "authors": [
         {
