@@ -4,27 +4,39 @@
     "keywords": ["markdown", "pimple", "twig", "silex"],
     "homepage": "http://github.com/freepius/php-richtext",
     "license": "CC0",
+
     "authors": [
         {
             "name": "Mathieu Poisbeau",
             "email": "freepius@anarchos-semitas.net"
         }
     ],
+
     "require": {
         "michelf/php-markdown": "1.4.*@dev",
         "michelf/php-smartypants": "1.6.*@dev"
     },
+
     "require-dev": {
+        "phpunit/phpunit": "~4.0",
         "pimple/pimple": "~3.0",
-        "twig/twig": ">=1.8.0,<2.0-dev",
-        "phpunit/phpunit": "~4.0"
+        "twig/twig": "~1.8"
     },
+
     "suggest": {
-        "silex/silex": "2.0.*@dev"
+        "pimple/pimple": "~3.0",
+        "silex/silex": "2.0.*@dev",
+        "twig/twig": "~1.8"
     },
+
     "autoload": {
-        "psr-0": { "Freepius": "src/" }
+        "psr-4": { "Freepius\\": "src/" }
     },
+
+    "autoload-dev": {
+        "psr-4": { "Freepius\\Tests\\": "tests/" }
+    },
+
     "extra": {
         "branch-alias": {
             "dev-master": "1.0-dev"

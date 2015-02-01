@@ -24,7 +24,7 @@ install it:
 
     {
         "require": {
-            "freepius\php-richtext": "~1.0"
+            "freepius/php-richtext": "1.0"
         }
     }
 

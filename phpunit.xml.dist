@@ -13,13 +13,13 @@
 >
     <testsuites>
         <testsuite name="php-richtext Test Suite">
-            <directory>./tests/Freepius</directory>
+            <directory>./tests</directory>
         </testsuite>
     </testsuites>
 
     <filter>
         <whitelist>
-            <directory>./src/Freepius</directory>
+            <directory>./src</directory>
         </whitelist>
     </filter>
 </phpunit>
