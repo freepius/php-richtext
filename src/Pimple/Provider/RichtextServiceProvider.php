@@ -11,7 +11,7 @@ use Pimple\ServiceProviderInterface;
  * Integration of Markdown(Extra) and SmartyPants(Typographer)
  * for Pimple container. If twig is active then add the Twig extension.
  */
-class RichtextProvider implements ServiceProviderInterface
+class RichtextServiceProvider implements ServiceProviderInterface
 {
     /**
      * {@inheritdoc}

@@ -59,7 +59,7 @@ Use as services of a `Pimple`_ DI Container:
 
     $c = new Pimple\Container();
 
-    $c->register(new Freepius\Pimple\Provider\RichtextProvider(), array(
+    $c->register(new Freepius\Pimple\Provider\RichtextServiceProvider(), array(
         'richtext.config' => array(/*config here*/),
     ));
 
@@ -78,13 +78,13 @@ Since `Silex`_ uses internally the `Pimple`_ DI Container, you can use **php-ric
 
     require_once __DIR__.'/../vendor/autoload.php';
 
-    use Freepius\Pimple\Provider\RichtextProvider;
+    use Freepius\Pimple\Provider\RichtextServiceProvider;
     use Silex\Application;
     use Symfony\Component\HttpFoundation\Request;
 
     $app = new Application();
 
-    $app->register(new RichtextProvider(), array(
+    $app->register(new RichtextServiceProvider(), array(
         'richtext.config' => array(/*config here*/),
     ));
 
@@ -121,7 +121,7 @@ If `Twig`_ is installed, you can also use the richtext filters in your `Twig`_ t
 
 
 **Note for Silex:** If you use `Twig`_ through `Silex`_, first register the ``TwigServiceProvider``,
-then register the ``RichtextProvider``. This one will add automatically the twig extension!
+then register the ``RichtextServiceProvider``. This one will add automatically the twig extension!
 
 
 Configuration
